@@ -36,6 +36,11 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Your custom apps
+    'apps.users',
+    'apps.portfolio',
+    'apps.algorithms',
 ]
 
 MIDDLEWARE = [
