@@ -55,7 +55,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+    # Dependencies
     'debug_toolbar',
+    'rest_framework',
 
     # Your custom apps
     'apps.users',

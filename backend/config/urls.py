@@ -21,4 +21,6 @@ import debug_toolbar
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('__debug__/', include(debug_toolbar.urls)),
+    # Include the `users` app URLs with a prefix, e.g., 'api/'
+    path('api/', include('apps.users.urls')),  # This line includes the URLs from your `users` app
 ]
