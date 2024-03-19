@@ -1,6 +1,8 @@
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from .models import UserProfile
+
+User = get_user_model()  # This will now refer to your CustomUser model
 
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
@@ -12,7 +14,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'profile']
+        fields = ['id', 'email', 'first_name', 'last_name', 'profile']  # Assuming you want to keep these fields
 
     def create(self, validated_data):
         profile_data = validated_data.pop('profile', None)
