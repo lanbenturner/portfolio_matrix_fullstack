@@ -6,9 +6,10 @@ import { VNodeRenderer } from '@layouts/components/VNodeRenderer'
 import { themeConfig } from '@themeConfig'
 
 const form = ref({
+  username: '',
   email: '',
   password: '',
-  remember: false,
+  privacyPolicies: false,
 })
 
 const isPasswordVisible = ref(false)
@@ -31,7 +32,7 @@ const isPasswordVisible = ref(false)
 
       <VCard
         class="auth-card px-2"
-        max-width="450"
+        max-width="448"
       >
         <VCardItem class="justify-center">
           <template #prepend>
@@ -47,28 +48,33 @@ const isPasswordVisible = ref(false)
 
         <VCardText>
           <h6 class="text-h6 mb-1">
-            Welcome to {{ themeConfig.app.title }}! 👋🏻
+            Adventure starts here 🚀
           </h6>
           <p class="mb-0">
-            Please sign-in to your account and start the adventure
+            Make your app management easy and fun!
           </p>
         </VCardText>
 
         <VCardText>
           <VForm @submit.prevent="() => {}">
             <VRow>
-              <!-- email -->
+              <!-- Username -->
               <VCol cols="12">
                 <VTextField
-                  v-model="form.email"
+                  v-model="form.username"
                   autofocus
+                  label="Username"
+                />
+
+                <!-- email -->
+                <VTextField
+                  v-model="form.email"
                   label="Email"
                   type="email"
+                  class="my-4"
                 />
-              </VCol>
 
-              <!-- password -->
-              <VCol cols="12">
+                <!-- password -->
                 <VTextField
                   v-model="form.password"
                   label="Password"
@@ -76,42 +82,44 @@ const isPasswordVisible = ref(false)
                   :append-inner-icon="isPasswordVisible ? 'bx-hide' : 'bx-show'"
                   @click:append-inner="isPasswordVisible = !isPasswordVisible"
                 />
-
-                <!-- remember me checkbox -->
-                <div class="d-flex align-center justify-space-between flex-wrap mt-2 mb-4">
+                <div class="d-flex  align-center mt-2 mb-4 text-wrap">
                   <VCheckbox
-                    v-model="form.remember"
-                    label="Remember me"
+                    id="privacy-policy"
+                    v-model="form.privacyPolicies"
+                    inline
                   />
-
-                  <RouterLink
-                    class="text-primary text-sm ms-2"
-                    to="/forgot-password"
+                  <VLabel
+                    for="privacy-policy"
+                    style="opacity: 1;"
                   >
-                    Forgot Password?
-                  </RouterLink>
+                    <span class="mx-1 text-wrap">I agree to
+                      <a
+                        href="javascript:void(0)"
+                        class="text-primary"
+                      >privacy policy & terms</a>
+                    </span>
+                  </VLabel>
                 </div>
 
-                <!-- login button -->
                 <VBtn
                   block
                   type="submit"
                 >
-                  Login
+                  Sign up
                 </VBtn>
               </VCol>
 
-              <!-- create account -->
+              <!-- login instead -->
               <VCol
                 cols="12"
-                class="text-center text-base d-flex justify-center flex-wrap"
+                class="d-flex justify-center flex-column flex-sm-row text-center text-base"
               >
-                <span>New on our platform?</span>
+                <span>Already have an account?</span>
                 <RouterLink
                   class="text-primary ms-2"
-                  to="/register"
+                  to="/login"
                 >
-                  Create an account
+                  Sign in instead
                 </RouterLink>
               </VCol>
 
@@ -130,7 +138,7 @@ const isPasswordVisible = ref(false)
                 class="text-center"
               >
                 <AuthProvider />
-              </VCol> <!-- -->
+              </VCol>
             </VRow>
           </VForm>
         </VCardText>
