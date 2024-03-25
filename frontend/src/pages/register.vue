@@ -49,7 +49,7 @@ const isPasswordVisible = ref(false)
 
         <VCardText>
           <h6 class="text-h6 mb-1 text-center">
-            Welcome to Portfolio Matrix!
+            Register New User
           </h6>
           <p class="mb-0 text-center">
             Create your account

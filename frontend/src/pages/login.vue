@@ -47,7 +47,7 @@ const isPasswordVisible = ref(false)
 
         <VCardText>
           <h6 class="text-h6 mb-1 text-center">
-            Welcome to {{ themeConfig.app.title }}
+            Account Login
           </h6>
           <p class="mb-0 text-center">
             Please sign-in to your account
@@ -115,6 +115,7 @@ const isPasswordVisible = ref(false)
                 </RouterLink>
               </VCol>
 
+              <!--
               <VCol
                 cols="12"
                 class="d-flex align-center"
@@ -122,7 +123,7 @@ const isPasswordVisible = ref(false)
                 <VDivider />
                 <span class="mx-4">or</span>
                 <VDivider />
-              </VCol>
+              </VCol> -->
 
             </VRow>
           </VForm>
