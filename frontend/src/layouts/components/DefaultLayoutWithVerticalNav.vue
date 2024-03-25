@@ -31,6 +31,7 @@ const globalThemeBackground = computed(() => global.current.value.colors.backgro
     <!-- 👉 navbar -->
     <template #navbar="{ toggleVerticalOverlayNavActive }">
       <div class="d-flex h-100 align-center">
+        <!--
         <IconBtn
           v-if="isLessThanOverlayNavBreakpoint(windowWidth)"
           class="ms-n3"
@@ -39,7 +40,7 @@ const globalThemeBackground = computed(() => global.current.value.colors.backgro
           <VIcon icon="bx-menu" />
         </IconBtn>
 
-        <NavbarThemeSwitcher />
+        <NavbarThemeSwitcher /> -->
 
         <VSpacer />
 
