@@ -46,10 +46,10 @@ const isPasswordVisible = ref(false)
         </VCardItem>
 
         <VCardText>
-          <h6 class="text-h6 mb-1">
-            Welcome to {{ themeConfig.app.title }}! 👋🏻
+          <h6 class="text-h6 mb-1 text-center">
+            Welcome to {{ themeConfig.app.title }}
           </h6>
-          <p class="mb-0">
+          <p class="mb-0 text-center">
             Please sign-in to your account
           </p>
         </VCardText>
