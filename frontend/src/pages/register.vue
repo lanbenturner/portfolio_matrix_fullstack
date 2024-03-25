@@ -41,9 +41,10 @@ const isPasswordVisible = ref(false)
             </div>
           </template>
 
+          <!--
           <VCardTitle class="auth-title">
             {{ themeConfig.app.title }}
-          </VCardTitle>
+          </VCardTitle> -->
         </VCardItem>
 
         <VCardText>

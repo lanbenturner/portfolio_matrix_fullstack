@@ -39,10 +39,10 @@ const isPasswordVisible = ref(false)
               <VNodeRenderer :nodes="themeConfig.app.logo" />
             </div>
           </template>
-
+          <!--
           <VCardTitle class="auth-title">
             {{ themeConfig.app.title }}
-          </VCardTitle>
+          </VCardTitle> -->
         </VCardItem>
 
         <VCardText>
@@ -124,13 +124,6 @@ const isPasswordVisible = ref(false)
                 <VDivider />
               </VCol>
 
-              <!-- auth providers -->
-              <VCol
-                cols="12"
-                class="text-center"
-              >
-                <AuthProvider />
-              </VCol> <!-- -->
             </VRow>
           </VForm>
         </VCardText>

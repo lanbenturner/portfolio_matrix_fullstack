@@ -32,16 +32,17 @@ const form = ref({ email: '' })
             </div>
           </template>
 
+          <!--
           <VCardTitle class="auth-title">
             {{ themeConfig.app.title }}
-          </VCardTitle>
+          </VCardTitle> -->
         </VCardItem>
 
         <VCardText>
-          <h6 class="text-h6 mb-1">
+          <h6 class="text-h6 mb-1 text-center">
             Forgot Password? 🔒
           </h6>
-          <p class="mb-0">
+          <p class="mb-0 text-center">
             Enter your email and we'll send you instructions to reset your password
           </p>
         </VCardText>
