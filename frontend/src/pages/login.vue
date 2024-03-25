@@ -50,7 +50,7 @@ const isPasswordVisible = ref(false)
             Welcome to {{ themeConfig.app.title }}! 👋🏻
           </h6>
           <p class="mb-0">
-            Please sign-in to your account and start the adventure
+            Please sign-in to your account
           </p>
         </VCardText>
 
