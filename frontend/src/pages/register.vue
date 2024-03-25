@@ -47,23 +47,39 @@ const isPasswordVisible = ref(false)
         </VCardItem>
 
         <VCardText>
-          <h6 class="text-h6 mb-1">
-            Adventure starts here 🚀
+          <h6 class="text-h6 mb-1 text-center">
+            Welcome to Portfolio Matrix!
           </h6>
-          <p class="mb-0">
-            Make your app management easy and fun!
+          <p class="mb-0 text-center">
+            Create your account
           </p>
         </VCardText>
 
         <VCardText>
           <VForm @submit.prevent="() => {}">
             <VRow>
-              <!-- Username -->
+              <!-- First Name -->
               <VCol cols="12">
                 <VTextField
-                  v-model="form.username"
+                  v-model="form.firstname"
                   autofocus
-                  label="Username"
+                  label="First Name"
+                />
+
+              <!-- Last Name -->
+                <VTextField
+                  v-model="form.lastname"
+                  autofocus
+                  label="Last Name"
+                  class="my-4"
+                />
+
+              <!-- Preferred Name -->
+                <VTextField
+                  v-model="form.preferredname"
+                  autofocus
+                  label="Preferred Name"
+                  class="my-4"
                 />
 
                 <!-- email -->
@@ -121,23 +137,6 @@ const isPasswordVisible = ref(false)
                 >
                   Sign in instead
                 </RouterLink>
-              </VCol>
-
-              <VCol
-                cols="12"
-                class="d-flex align-center"
-              >
-                <VDivider />
-                <span class="mx-4">or</span>
-                <VDivider />
-              </VCol>
-
-              <!-- auth providers -->
-              <VCol
-                cols="12"
-                class="text-center"
-              >
-                <AuthProvider />
               </VCol>
             </VRow>
           </VForm>
