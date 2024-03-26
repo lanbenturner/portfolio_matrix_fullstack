@@ -106,56 +106,6 @@ const currencies = [
   <VRow>
     <VCol cols="12">
       <VCard title="Account Details">
-        <VCardText class="d-flex">
-          <!-- 👉 Avatar -->
-          <VAvatar
-            size="100"
-            class="user-profile me-6"
-            :image="accountDataLocal.avatarImg"
-          />
-
-          <!-- 👉 Upload Photo -->
-          <form class="d-flex flex-column justify-center gap-4">
-            <div class="d-flex flex-wrap gap-4">
-              <VBtn
-                color="primary"
-                @click="refInputEl?.click()"
-              >
-                <VIcon
-                  icon="bx-cloud-upload"
-                  class="d-sm-none"
-                />
-                <span class="d-none d-sm-block">Upload new photo</span>
-              </VBtn>
-
-              <input
-                ref="refInputEl"
-                type="file"
-                name="file"
-                accept=".jpeg,.png,.jpg,GIF"
-                hidden
-                @input="changeAvatar"
-              >
-
-              <VBtn
-                type="reset"
-                color="error"
-                variant="tonal"
-                @click="resetAvatar"
-              >
-                <span class="d-none d-sm-block">Reset</span>
-                <VIcon
-                  icon="bx-refresh"
-                  class="d-sm-none"
-                />
-              </VBtn>
-            </div>
-
-            <p class="text-xs mb-0 text-medium-emphasis">
-              Allowed JPG, GIF or PNG. Max size of 800K
-            </p>
-          </form>
-        </VCardText>
 
         <VDivider />
 
