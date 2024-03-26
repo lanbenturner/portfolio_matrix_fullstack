@@ -1,4 +1,5 @@
 <script setup>
+/*
 import asana from '@images/icons/brands/asana.png'
 import behance from '@images/icons/brands/behance.png'
 import dribbble from '@images/icons/brands/dribbble.png'
@@ -78,6 +79,7 @@ const socialAccounts = ref([
     connected: false,
   },
 ])
+*/
 </script>
 
 <template>
@@ -90,7 +92,7 @@ const socialAccounts = ref([
       <VCard
         title="Connected Accounts"
         subtitle="Display content from your connected accounts on your site"
-      >
+      > <!--
         <VCardText>
           <VList class="card-list">
             <VListItem
@@ -122,11 +124,12 @@ const socialAccounts = ref([
               </template>
             </VListItem>
           </VList>
-        </VCardText>
+        </VCardText> -->
       </VCard>
     </VCol>
 
     <!-- 👉 Social Accounts -->
+    <!--
     <VCol
       cols="12"
       md="6"
@@ -190,7 +193,7 @@ const socialAccounts = ref([
           </VList>
         </VCardText>
       </VCard>
-    </VCol>
+    </VCol> -->
   </VRow>
 </template>
 
