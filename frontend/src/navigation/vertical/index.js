@@ -9,4 +9,9 @@ export default [
     to: { name: 'second-page' },
     icon: { icon: 'bx-file-blank' },
   },
+  {
+    title: 'Account Settings',
+    to: { name: 'account-settings' },
+    icon: { icon: 'bx-file-blank' },
+  },
 ]
