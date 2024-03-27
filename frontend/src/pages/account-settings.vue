@@ -1,5 +1,5 @@
 <script setup>
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import AccountSettingsAccount from '@/views/pages/account-settings/AccountSettingsAccount.vue'
 import AccountSettingsBillingAndPlans from '@/views/pages/account-settings/AccountSettingsBillingAndPlans.vue'
 import AccountSettingsConnections from '@/views/pages/account-settings/AccountSettingsConnections.vue'
@@ -7,8 +7,20 @@ import AccountSettingsNotification from '@/views/pages/account-settings/AccountS
 import AccountSettingsSecurity from '@/views/pages/account-settings/AccountSettingsSecurity.vue'
 
 const route = useRoute()
-const activeTab = ref(route.params.tab)
+const router = useRouter()
+// Default to 'account' tab if no tab is specified in the URL
+const defaultTab = 'account'
+const activeTab = ref(route.params.tab || defaultTab)
 
+// Watch for changes in route params to update the active tab
+watch(() => route.params.tab, (newTab) => {
+  activeTab.value = newTab || defaultTab
+})
+
+// Ensure the URL is updated to reflect the default tab when none is specified
+if (!route.params.tab) {
+  router.replace({ name: 'account-settings', params: { tab: defaultTab } }).catch(err => {});
+}
 // tabs
 const tabs = [
   {
