@@ -29,7 +29,7 @@ html {
   border-radius: 50%;
   inline-size: 55px;
   inset-block-start: calc(50% + 50px);
-  inset-inline-start: calc(50% - 39px);
+  inset-inline-start: calc(50% - 44px);
 }
 
 .loading .effect-1,
