@@ -1,5 +1,14 @@
 // Write your overrides
 
+.authpagelogo {
+  width: 40%;
+  height: auto;
+  padding-bottom: 20px;
+  display: flex; /* Added to make the container a flex container */
+  justify-content: center; /* Center justify the content horizontally */
+}
+
+
 .nav-header {
   padding: 0; /* Adjust or remove padding */
   display: flex; /* Ensure it's a flex container */
