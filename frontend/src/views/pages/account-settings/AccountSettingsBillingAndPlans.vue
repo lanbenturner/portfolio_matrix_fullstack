@@ -482,10 +482,10 @@ const resetPaymentForm = () => {
       </VCard>
     </VCol>
 
-    <!-- 👉 Billing History -->
+    <!-- 👉 Billing History
     <VCol cols="12">
       <BillingHistoryTable />
-    </VCol>
+    </VCol> -->
   </VRow>
 </template>
 
