@@ -135,6 +135,17 @@ const currencies = [
                 />
               </VCol>
 
+              <!-- 👉 Preferred Name -->
+              <VCol
+                cols="12"
+                md="6"
+              >
+                <VTextField
+                  v-model="accountDataLocal.org"
+                  label="Preferred Name"
+                />
+              </VCol>
+
               <!-- 👉 Email -->
               <VCol
                 cols="12"
@@ -144,17 +155,6 @@ const currencies = [
                   v-model="accountDataLocal.email"
                   label="E-mail"
                   type="email"
-                />
-              </VCol>
-
-              <!-- 👉 Organization -->
-              <VCol
-                cols="12"
-                md="6"
-              >
-                <VTextField
-                  v-model="accountDataLocal.org"
-                  label="Organization"
                 />
               </VCol>
 
@@ -185,9 +185,10 @@ const currencies = [
                 cols="12"
                 md="6"
               >
-                <VTextField
+                <VSelect
                   v-model="accountDataLocal.state"
                   label="State"
+                  :items="['USA', 'Canada', 'UK', 'India', 'Australia']"
                 />
               </VCol>
 
@@ -199,56 +200,6 @@ const currencies = [
                 <VTextField
                   v-model="accountDataLocal.zip"
                   label="Zip Code"
-                />
-              </VCol>
-
-              <!-- 👉 Country -->
-              <VCol
-                cols="12"
-                md="6"
-              >
-                <VSelect
-                  v-model="accountDataLocal.country"
-                  label="Country"
-                  :items="['USA', 'Canada', 'UK', 'India', 'Australia']"
-                />
-              </VCol>
-
-              <!-- 👉 Language -->
-              <VCol
-                cols="12"
-                md="6"
-              >
-                <VSelect
-                  v-model="accountDataLocal.language"
-                  label="Language"
-                  :items="['English', 'Spanish', 'Arabic', 'Hindi', 'Urdu']"
-                />
-              </VCol>
-
-              <!-- 👉 Timezone -->
-              <VCol
-                cols="12"
-                md="6"
-              >
-                <VSelect
-                  v-model="accountDataLocal.timezone"
-                  label="Timezone"
-                  :items="timezones"
-                  :menu-props="{ maxHeight: 200 }"
-                />
-              </VCol>
-
-              <!-- 👉 Currency -->
-              <VCol
-                cols="12"
-                md="6"
-              >
-                <VSelect
-                  v-model="accountDataLocal.currency"
-                  label="Currency"
-                  :items="currencies"
-                  :menu-props="{ maxHeight: 200 }"
                 />
               </VCol>
 
