@@ -7,7 +7,7 @@ User = get_user_model()  # This refers to your CustomUser model
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
-        fields = ['preferred_name', 'phone_number', 'city', 'state', 'address_line1']
+        fields = ['preferred_name', 'phone_number', 'city', 'state', 'address']
 
 class UserSerializer(serializers.ModelSerializer):
     profile = UserProfileSerializer(required=False)
