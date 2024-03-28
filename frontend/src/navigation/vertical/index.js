@@ -12,6 +12,6 @@ export default [
   {
     title: 'Account Settings',
     to: { name: 'account-settings' },
-    icon: { icon: 'bx-file-blank' },
+    icon: { icon: 'bx-cog' },
   },
 ]
