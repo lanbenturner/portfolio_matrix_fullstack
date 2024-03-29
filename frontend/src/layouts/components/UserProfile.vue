@@ -1,4 +1,17 @@
 <script setup>
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+const logout = () => {
+  // Clear the authentication tokens and user data from localStorage
+  localStorage.removeItem('accessToken')
+  localStorage.removeItem('refreshToken')
+  localStorage.removeItem('userAbilities') // Remove this if you don't store abilities in localStorage
+
+  // Redirect the user to the login page
+  router.push('/login')
+}
 </script>
 
 <template>
@@ -68,7 +81,7 @@
           <VDivider class="my-2" />
 
           <!-- 👉 Logout -->
-          <VListItem to="/login">
+          <VListItem @click="logout">
             <template #prepend>
               <VIcon
                 class="me-2"
