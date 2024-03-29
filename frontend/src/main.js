@@ -12,10 +12,8 @@ import { createApp } from 'vue'
 
 loadFonts()
 
-
 // Create vue app
 const app = createApp(App)
-
 
 // Use plugins
 app.use(vuetify)
@@ -25,3 +23,5 @@ app.use(layoutsPlugin)
 
 // Mount vue app
 app.mount('#app')
+
+console.log('API Base URL:', import.meta.env.VITE_APP_API_BASE_URL);

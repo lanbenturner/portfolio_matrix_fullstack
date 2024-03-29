@@ -4,15 +4,41 @@ import authV1BottomShape from '@images/svg/bottom-illustration.svg?raw'
 import authV1TopShape from '@images/svg/top-illustration.svg?raw'
 import { VNodeRenderer } from '@layouts/components/VNodeRenderer'
 import { themeConfig } from '@themeConfig'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import axiosIns from '@/plugins/axios'
+
+const router = useRouter()
 
 const form = ref({
-  username: '',
+  firstname: '',
+  lastname: '',
+  preferredname: '',
   email: '',
   password: '',
   privacyPolicies: false,
 })
 
 const isPasswordVisible = ref(false)
+
+const register = async () => {
+  try {
+    const response = await axiosIns.post('register/', {
+      first_name: form.value.firstname,
+      last_name: form.value.lastname,
+      preferred_name: form.value.preferredname,
+      email: form.value.email,
+      password: form.value.password,
+      // Include any additional fields as required by your backend
+    })
+
+    // Handle successful registration (e.g., redirect or show a success message)
+    router.push('/login')
+  } catch (error) {
+    console.error('Registration error:', error)
+    // Handle errors (e.g., show an error message)
+  }
+}
 </script>
 
 <template>
@@ -57,7 +83,7 @@ const isPasswordVisible = ref(false)
         </VCardText>
 
         <VCardText>
-          <VForm @submit.prevent="() => {}">
+          <VForm @submit.prevent="register">
             <VRow>
               <!-- First Name -->
               <VCol cols="12">

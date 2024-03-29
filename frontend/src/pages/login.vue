@@ -4,6 +4,11 @@ import authV1BottomShape from '@images/svg/bottom-illustration.svg?raw'
 import authV1TopShape from '@images/svg/top-illustration.svg?raw'
 import { VNodeRenderer } from '@layouts/components/VNodeRenderer'
 import { themeConfig } from '@themeConfig'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import axiosIns from '@/plugins/axios'
+
+const router = useRouter()
 
 const form = ref({
   email: '',
@@ -12,6 +17,27 @@ const form = ref({
 })
 
 const isPasswordVisible = ref(false)
+
+const login = async () => {
+  try {
+    // Ensure the endpoint matches your Django backend's token obtain path
+    // Based on the setup, it seems like it should be '/token/' or '/api/token/'
+    const response = await axiosIns.post('token/', {
+      email: form.value.email,
+      password: form.value.password,
+    })
+
+    // Store tokens in localStorage. Depending on your backend, you might need to adjust the keys ('access' and 'refresh')
+    localStorage.setItem('token/accessToken', JSON.stringify(response.data.access))
+    localStorage.setItem('token/refreshToken', JSON.stringify(response.data.refresh))
+
+    // Redirect to dashboard or update UI after successful login
+    router.push('/')
+  } catch (error) {
+    console.error('Login error:', error)
+    // Handle errors (e.g., show an error message)
+  }
+}
 </script>
 
 <template>
@@ -55,7 +81,7 @@ const isPasswordVisible = ref(false)
         </VCardText>
 
         <VCardText>
-          <VForm @submit.prevent="() => {}">
+          <VForm @submit.prevent="login">
             <VRow>
               <!-- email -->
               <VCol cols="12">

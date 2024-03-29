@@ -41,7 +41,8 @@ export default defineConfig({
     }),
     DefineOptions(),
   ],
-  define: { 'process.env': {} },
+  // Remove the empty process.env definition
+  define: {},
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
