@@ -7,15 +7,15 @@ class UserProfileInline(admin.StackedInline):
     can_delete = False
     verbose_name_plural = 'UserProfile'
 
-# Update CustomUserAdmin to include first_name and last_name in list_display
 class CustomUserAdmin(UserAdmin):
     inlines = (UserProfileInline, )
     model = CustomUser
-    list_display = ['email', 'first_name', 'last_name', 'is_staff', 'is_active']  # Added is_active
+    # Include 'id' and 'preferred_name' in list_display
+    list_display = ['id', 'email', 'first_name', 'last_name', 'preferred_name', 'is_staff', 'is_active']
 
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        (('Personal info'), {'fields': ('first_name', 'last_name')}),
+        (('Personal info'), {'fields': ('first_name', 'last_name', 'preferred_name')}),  # Include 'preferred_name' here
         (('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
         (('Important dates'), {'fields': ('last_login', 'date_joined')}),
     )
@@ -23,11 +23,12 @@ class CustomUserAdmin(UserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'password1', 'password2', 'first_name', 'last_name', 'is_staff', 'is_active'),  # Added first_name, last_name, and is_active
+            'fields': ('email', 'password1', 'password2', 'first_name', 'last_name', 'preferred_name', 'is_staff', 'is_active'),  # Include 'preferred_name' here
         }),
     )
 
-    search_fields = ('email', 'first_name', 'last_name')  # Added search by first_name and last_name
+    # Include 'preferred_name' in search_fields
+    search_fields = ('email', 'first_name', 'last_name', 'preferred_name')
     ordering = ('email',)
 
 admin.site.register(CustomUser, CustomUserAdmin)
