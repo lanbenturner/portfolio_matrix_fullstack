@@ -28,8 +28,9 @@ const login = async () => {
     })
 
     // Store tokens in localStorage. Depending on your backend, you might need to adjust the keys ('access' and 'refresh')
-    localStorage.setItem('token/accessToken', JSON.stringify(response.data.access))
-    localStorage.setItem('token/refreshToken', JSON.stringify(response.data.refresh))
+    localStorage.setItem('accessToken', JSON.stringify(response.data.access));
+    localStorage.setItem('refreshToken', JSON.stringify(response.data.refresh));
+
 
     // Redirect to dashboard or update UI after successful login
     router.push('/')
