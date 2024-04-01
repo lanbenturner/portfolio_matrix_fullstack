@@ -7,43 +7,45 @@ const customRoutes = [
     path: '/account-settings/:tab?',
     name: 'account-settings',
     component: () => import('@/pages/account-settings.vue'),
-    meta: { requiresAuth: true }, // Indicate that this route requires authentication
+    meta: { requiresAuth: true }, // Marking this route as requiring authentication
   },
   {
     path: '/',
     name: 'index',
     component: () => import('@/pages/index.vue'),
-    meta: { requiresAuth: true }, // Protect the index page
+    meta: { requiresAuth: true }, // Protecting the home page
   },
   {
     path: '/second-page',
     name: 'second-page',
     component: () => import('@/pages/second-page.vue'),
-    meta: { requiresAuth: true }, // Protect the second page
+    meta: { requiresAuth: true }, // Another protected route
   },
-  // Add other custom routes or modifications here
+  // Include any other custom routes you might have here
 ];
 
+// Setup routes with layouts and include customRoutes
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: setupLayouts([...routes, ...customRoutes]),
+  routes: setupLayouts([...routes, ...customRoutes]), // Merging auto-generated routes with custom routes
 });
 
-// Global navigation guard to check for authentication
+// Global beforeEach navigation guard for authentication checks
 router.beforeEach((to, from, next) => {
-  // Check if the route requires authentication
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    // Check if the user is logged in (e.g., by checking for an access token in localStorage)
-    const isAuthenticated = localStorage.getItem('accessToken'); // Adjust the key according to your token storage
+    // Attempting to retrieve the authentication token from localStorage
+    const isAuthenticated = localStorage.getItem('accessToken'); // Ensure this key matches how you store your token
 
     if (!isAuthenticated) {
-      // Redirect to the login page if not authenticated
-      next({ name: 'Login' }); // Make sure you have a route named 'Login'
+      // If no token found, redirect to the login page
+      next({ name: 'login' }); // Adjust this to match your login route's name
     } else {
-      next(); // Proceed to the route if authenticated
+      // If a token is found, proceed to the requested route
+      next();
     }
   } else {
-    next(); // Proceed if the route does not require authentication
+    // If the route does not require authentication, proceed as normal
+    next();
   }
 });
 
