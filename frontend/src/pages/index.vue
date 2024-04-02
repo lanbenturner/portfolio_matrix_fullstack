@@ -1,5 +1,16 @@
+<script>
+import PageHeaderDivider from '@/components/PageHeaderDivider.vue';
+
+export default {
+  components: {
+    PageHeaderDivider
+  }
+}
+</script>
+
 <template>
   <div>
+    <PageHeaderDivider pageTitle="Your Page Title" />
     <VCard
       class="mb-6"
       title="Kick start your project 🚀"
