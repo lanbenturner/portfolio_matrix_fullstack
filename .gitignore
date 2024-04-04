@@ -1,5 +1,6 @@
 file_structure.txt
 /removed
+.DS_Store
 
 ### ------------ BACKEND IGNORE ------------ ###
 
@@ -215,3 +216,4 @@ dist-ssr
 
 # iconify dist files
 src/@iconify/*.js
+.DS_Store
