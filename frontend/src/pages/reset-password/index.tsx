@@ -1,14 +1,11 @@
 // ** React Imports
-import { useState, ChangeEvent, ReactNode } from 'react'
+import { ChangeEvent, ReactNode, useState } from 'react'
 
 // ** Next Import
 import Link from 'next/link'
 
 // ** MUI Components
 import Button from '@mui/material/Button'
-import Divider from '@mui/material/Divider'
-import Checkbox from '@mui/material/Checkbox'
-import TextField from '@mui/material/TextField'
 import InputLabel from '@mui/material/InputLabel'
 import IconButton from '@mui/material/IconButton'
 import Box, { BoxProps } from '@mui/material/Box'
@@ -18,7 +15,6 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import OutlinedInput from '@mui/material/OutlinedInput'
 import { styled, useTheme } from '@mui/material/styles'
 import InputAdornment from '@mui/material/InputAdornment'
-import FormControlLabel from '@mui/material/FormControlLabel'
 
 // ** Icon Imports
 import Icon from 'src/@core/components/icon'
@@ -33,12 +29,14 @@ import BlankLayout from 'src/@core/layouts/BlankLayout'
 import { useSettings } from 'src/@core/hooks/useSettings'
 
 interface State {
-  password: string
-  showPassword: boolean
+  newPassword: string
+  showNewPassword: boolean
+  confirmNewPassword: string
+  showConfirmNewPassword: boolean
 }
 
 // ** Styled Components
-const RegisterIllustration = styled('img')({
+const ResetPasswordIllustration = styled('img')({
   height: 'auto',
   maxWidth: '100%'
 })
@@ -62,16 +60,21 @@ const RightWrapper = styled(Box)<BoxProps>(({ theme }) => ({
 }))
 
 const LinkStyled = styled(Link)(({ theme }) => ({
+  display: 'flex',
   fontSize: '0.875rem',
+  alignItems: 'center',
   textDecoration: 'none',
+  justifyContent: 'center',
   color: theme.palette.primary.main
 }))
 
-const RegisterV2 = () => {
+const ResetPasswordV2 = () => {
   // ** States
   const [values, setValues] = useState<State>({
-    password: '',
-    showPassword: false
+    newPassword: '',
+    showNewPassword: false,
+    confirmNewPassword: '',
+    showConfirmNewPassword: false
   })
 
   // ** Hooks
@@ -82,28 +85,37 @@ const RegisterV2 = () => {
   // ** Var
   const { skin } = settings
 
-  const handleChange = (prop: keyof State) => (event: ChangeEvent<HTMLInputElement>) => {
+  // Handle New Password
+  const handleNewPasswordChange = (prop: keyof State) => (event: ChangeEvent<HTMLInputElement>) => {
     setValues({ ...values, [prop]: event.target.value })
   }
-  const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword })
+  const handleClickShowNewPassword = () => {
+    setValues({ ...values, showNewPassword: !values.showNewPassword })
+  }
+
+  // Handle Confirm New Password
+  const handleConfirmNewPasswordChange = (prop: keyof State) => (event: ChangeEvent<HTMLInputElement>) => {
+    setValues({ ...values, [prop]: event.target.value })
+  }
+  const handleClickShowConfirmNewPassword = () => {
+    setValues({ ...values, showConfirmNewPassword: !values.showConfirmNewPassword })
   }
 
   return (
     <Box className='content-right'>
       {!hidden ? (
         <Box sx={{ p: 12, flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <RegisterIllustration
+          <ResetPasswordIllustration
             width={700}
-            alt='register-illustration'
-            src={`/images/pages/girl-with-laptop-${theme.palette.mode}.png`}
+            alt='reset-password-illustration'
+            src={`/images/pages/boy-with-laptop-${theme.palette.mode}.png`}
           />
         </Box>
       ) : null}
       <RightWrapper
         sx={{ ...(skin === 'bordered' && !hidden && { borderLeft: `1px solid ${theme.palette.divider}` }) }}
       >
-        <Box sx={{ mx: 'auto', maxWidth: 400 }}>
+        <Box sx={{ mx: 'auto', width: '100%', maxWidth: 400 }}>
           <Box sx={{ mb: 8, display: 'flex', alignItems: 'center' }}>
             <svg width={22} height={32} viewBox='0 0 55 81' fill='none' xmlns='http://www.w3.org/2000/svg'>
               <path
@@ -136,81 +148,66 @@ const RegisterV2 = () => {
             </Typography>
           </Box>
           <Typography variant='h6' sx={{ mb: 1.5 }}>
-            Adventure starts here 🚀
+            Reset Password 🔒
           </Typography>
-          <Typography sx={{ mb: 6, color: 'text.secondary' }}>Make your app management easy and fun!</Typography>
+          <Typography sx={{ mb: 6, color: 'text.secondary' }}>
+            for <strong>john.doe@email.com</strong>
+          </Typography>
           <form noValidate autoComplete='off' onSubmit={e => e.preventDefault()}>
-            <TextField autoFocus fullWidth id='username' label='Username' sx={{ mb: 4 }} />
-            <TextField fullWidth type='email' label='Email' sx={{ mb: 4 }} />
-            <FormControl fullWidth>
-              <InputLabel htmlFor='auth-register-v2-password'>Password</InputLabel>
+            <FormControl sx={{ display: 'flex', mb: 4 }}>
+              <InputLabel htmlFor='auth-reset-password-v2-new-password'>New Password</InputLabel>
               <OutlinedInput
-                label='Password'
-                value={values.password}
-                id='auth-register-v2-password'
-                onChange={handleChange('password')}
-                type={values.showPassword ? 'text' : 'password'}
+                autoFocus
+                label='New Password'
+                value={values.newPassword}
+                id='auth-reset-password-v2-new-password'
+                onChange={handleNewPasswordChange('newPassword')}
+                type={values.showNewPassword ? 'text' : 'password'}
                 endAdornment={
                   <InputAdornment position='end'>
                     <IconButton
                       edge='end'
-                      onClick={handleClickShowPassword}
+                      onClick={handleClickShowNewPassword}
                       onMouseDown={e => e.preventDefault()}
                       aria-label='toggle password visibility'
                     >
-                      <Icon fontSize={20} icon={values.showPassword ? 'bx:show' : 'bx:hide'} />
+                      <Icon fontSize={20} icon={values.showNewPassword ? 'bx:show' : 'bx:hide'} />
                     </IconButton>
                   </InputAdornment>
                 }
               />
             </FormControl>
-            <FormControlLabel
-              control={<Checkbox />}
-              sx={{
-                mb: 4,
-                mt: 1.5,
-                '& .MuiFormControlLabel-label': { fontSize: '0.875rem', color: 'text.secondary' }
-              }}
-              label={
-                <>
-                  <span>I agree to </span>
-                  <LinkStyled href='/' onClick={e => e.preventDefault()}>
-                    privacy policy & terms
-                  </LinkStyled>
-                </>
-              }
-            />
+            <FormControl sx={{ display: 'flex', mb: 6 }}>
+              <InputLabel htmlFor='auth-reset-password-v2-confirm-password'>Confirm Password</InputLabel>
+              <OutlinedInput
+                label='Confirm Password'
+                value={values.confirmNewPassword}
+                id='auth-reset-password-v2-confirm-password'
+                type={values.showConfirmNewPassword ? 'text' : 'password'}
+                onChange={handleConfirmNewPasswordChange('confirmNewPassword')}
+                endAdornment={
+                  <InputAdornment position='end'>
+                    <IconButton
+                      edge='end'
+                      onMouseDown={e => e.preventDefault()}
+                      aria-label='toggle password visibility'
+                      onClick={handleClickShowConfirmNewPassword}
+                    >
+                      <Icon fontSize={20} icon={values.showConfirmNewPassword ? 'bx:show' : 'bx:hide'} />
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+            </FormControl>
             <Button fullWidth size='large' type='submit' variant='contained' sx={{ mb: 4 }}>
-              Sign up
+              Set New Password
             </Button>
-            <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
-              <Typography variant='body2' sx={{ mr: 2 }}>
-                Already have an account?
-              </Typography>
-              <Typography variant='body2'>
-                <LinkStyled href='/pages/auth/login-v2'>Sign in instead</LinkStyled>
-              </Typography>
-            </Box>
-            <Divider sx={{ my: `${theme.spacing(6)} !important` }}>or</Divider>
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <IconButton href='/' component={Link} sx={{ color: '#497ce2' }} onClick={e => e.preventDefault()}>
-                <Icon icon='bxl:facebook-circle' />
-              </IconButton>
-              <IconButton href='/' component={Link} sx={{ color: '#1da1f2' }} onClick={e => e.preventDefault()}>
-                <Icon icon='bxl:twitter' />
-              </IconButton>
-              <IconButton
-                href='/'
-                component={Link}
-                onClick={e => e.preventDefault()}
-                sx={{ color: theme.palette.mode === 'light' ? '#272727' : 'grey.300' }}
-              >
-                <Icon icon='bxl:github' />
-              </IconButton>
-              <IconButton href='/' component={Link} sx={{ color: '#db4437' }} onClick={e => e.preventDefault()}>
-                <Icon icon='bxl:google' />
-              </IconButton>
-            </Box>
+            <Typography variant='body2' sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <LinkStyled href='/pages/auth/login-v2'>
+                <Icon icon='bx:chevron-left' />
+                <span>Back to login</span>
+              </LinkStyled>
+            </Typography>
           </form>
         </Box>
       </RightWrapper>
@@ -218,6 +215,6 @@ const RegisterV2 = () => {
   )
 }
 
-RegisterV2.getLayout = (page: ReactNode) => <BlankLayout>{page}</BlankLayout>
+ResetPasswordV2.getLayout = (page: ReactNode) => <BlankLayout>{page}</BlankLayout>
 
-export default RegisterV2
+export default ResetPasswordV2

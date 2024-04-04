@@ -6,14 +6,10 @@ import Link from 'next/link'
 
 // ** MUI Components
 import Button from '@mui/material/Button'
-import TextField from '@mui/material/TextField'
-import Box, { BoxProps } from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
+import Box, { BoxProps } from '@mui/material/Box'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { styled, useTheme } from '@mui/material/styles'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
 
 // ** Configs
 import themeConfig from 'src/configs/themeConfig'
@@ -24,8 +20,8 @@ import BlankLayout from 'src/@core/layouts/BlankLayout'
 // ** Hooks
 import { useSettings } from 'src/@core/hooks/useSettings'
 
-// Styled Components
-const ForgotPasswordIllustration = styled('img')({
+// ** Styled Components
+const TwoStepIllustration = styled('img')({
   height: 'auto',
   maxWidth: '100%'
 })
@@ -49,14 +45,12 @@ const RightWrapper = styled(Box)<BoxProps>(({ theme }) => ({
 }))
 
 const LinkStyled = styled(Link)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
   textDecoration: 'none',
-  justifyContent: 'center',
+  marginLeft: theme.spacing(1),
   color: theme.palette.primary.main
 }))
 
-const ForgotPasswordV2 = () => {
+const VerifyEmailV2 = () => {
   // ** Hooks
   const theme = useTheme()
   const { settings } = useSettings()
@@ -69,10 +63,10 @@ const ForgotPasswordV2 = () => {
     <Box className='content-right'>
       {!hidden ? (
         <Box sx={{ p: 12, flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <ForgotPasswordIllustration
+          <TwoStepIllustration
             width={700}
-            alt='forgot-password-illustration'
-            src={`/images/pages/girl-unlock-password-${theme.palette.mode}.png`}
+            alt='verify-email-illustration'
+            src={`/images/pages/boy-verify-email-${theme.palette.mode}.png`}
           />
         </Box>
       ) : null}
@@ -111,30 +105,30 @@ const ForgotPasswordV2 = () => {
               {themeConfig.templateName}
             </Typography>
           </Box>
-          <Typography variant='h6' sx={{ mb: 1.5 }}>
-            Forgot Password? 🔒
+          <Typography variant='h5' sx={{ mb: 1.5 }}>
+            Verify your email ✉️
           </Typography>
           <Typography sx={{ mb: 6, color: 'text.secondary' }}>
-            Enter your email and we&prime;ll send you instructions to reset your password
+            Account activation link sent to your email address: <strong>john.doe@email.com</strong> Please follow the
+            link inside to continue.
           </Typography>
-          <form noValidate autoComplete='off' onSubmit={e => e.preventDefault()}>
-            <TextField autoFocus type='email' label='Email' sx={{ display: 'flex', mb: 6 }} />
-            <Button fullWidth size='large' type='submit' variant='contained' sx={{ mb: 4 }}>
-              Send reset link
-            </Button>
-            <Typography variant='body2' sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <LinkStyled href='/pages/auth/login-v2'>
-                <Icon icon='bx:chevron-left' />
-                <span>Back to login</span>
-              </LinkStyled>
+          <Button fullWidth variant='contained' sx={{ mb: 4 }}>
+            Skip for now
+          </Button>
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Typography sx={{ mr: 1 }} variant='body2'>
+              Didn't get the mail?
             </Typography>
-          </form>
+            <LinkStyled href='/' onClick={e => e.preventDefault()}>
+              Resend
+            </LinkStyled>
+          </Box>
         </Box>
       </RightWrapper>
     </Box>
   )
 }
 
-ForgotPasswordV2.getLayout = (page: ReactNode) => <BlankLayout>{page}</BlankLayout>
+VerifyEmailV2.getLayout = (page: ReactNode) => <BlankLayout>{page}</BlankLayout>
 
-export default ForgotPasswordV2
+export default VerifyEmailV2
