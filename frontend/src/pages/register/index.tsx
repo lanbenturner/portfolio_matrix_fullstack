@@ -1,5 +1,8 @@
 // ** React Imports
-import { ReactNode, useState } from 'react'
+import React, { ReactNode, useState, ChangeEvent, FormEvent } from 'react';
+
+import axios from 'axios';
+import authConfig from 'src/configs/auth';
 
 // ** Next Import
 import Link from 'next/link'
@@ -18,17 +21,9 @@ import OutlinedInput from '@mui/material/OutlinedInput'
 import { styled, useTheme } from '@mui/material/styles'
 import InputAdornment from '@mui/material/InputAdornment'
 import FormControlLabel from '@mui/material/FormControlLabel'
-
-// ** Icon Imports
 import Icon from 'src/@core/components/icon'
-
-// ** Configs
 import themeConfig from 'src/configs/themeConfig'
-
-// ** Layout Import
 import BlankLayout from 'src/@core/layouts/BlankLayout'
-
-// ** Hooks
 import { useSettings } from 'src/@core/hooks/useSettings'
 
 // ** Styled Components
@@ -64,6 +59,33 @@ const LinkStyled = styled(Link)(({ theme }) => ({
 const Register = () => {
   // ** States
   const [showPassword, setShowPassword] = useState<boolean>(false)
+
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    preferredName: '',
+    email: '',
+    password: '',
+  });
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prevFormData => ({
+      ...prevFormData,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post(authConfig.registerEndpoint, formData);
+      console.log('Registration successful', response.data);
+    } catch (error: any) {
+      console.error('Registration error', error.response?.data);
+    }
+  };
 
   // ** Hooks
   const theme = useTheme()
@@ -123,30 +145,64 @@ const Register = () => {
             Adventure starts here 🚀
           </Typography>
           <Typography sx={{ mb: 6, color: 'text.secondary' }}>Make your app management easy and fun!</Typography>
-          <form noValidate autoComplete='off' onSubmit={e => e.preventDefault()}>
-            <TextField autoFocus fullWidth sx={{ mb: 4 }} label='First Name' />
-            <TextField fullWidth label='Last Name' sx={{ mb: 4 }} />
-            <TextField fullWidth label='Preferred Name' sx={{ mb: 4 }} />
-            <TextField fullWidth label='Email' sx={{ mb: 4 }} />
-            <FormControl fullWidth>
-              <InputLabel htmlFor='auth-login-v2-password'>Password</InputLabel>
+          <form noValidate autoComplete='off' onSubmit={handleSubmit}>
+            <TextField
+              autoFocus
+              fullWidth
+              name="firstName"
+              value={formData.firstName}
+              onChange={handleChange}
+              label='First Name'
+              sx={{ mb: 4 }}
+            />
+            <TextField
+              fullWidth
+              name="lastName"
+              value={formData.lastName}
+              onChange={handleChange}
+              label='Last Name'
+              sx={{ mb: 4 }}
+            />
+            <TextField
+              fullWidth
+              name="preferredName"
+              value={formData.preferredName}
+              onChange={handleChange}
+              label='Preferred Name'
+              sx={{ mb: 4 }}
+            />
+            <TextField
+              fullWidth
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              label='Email'
+              sx={{ mb: 4 }}
+            />
+            <FormControl fullWidth sx={{ mb: 4 }}>
+              <InputLabel htmlFor='auth-register-password'>Password</InputLabel>
               <OutlinedInput
-                label='Password'
-                id='auth-login-v2-password'
+                id='auth-register-password'
+                name="password"
                 type={showPassword ? 'text' : 'password'}
+                value={formData.password}
+                onChange={handleChange}
                 endAdornment={
                   <InputAdornment position='end'>
                     <IconButton
-                      edge='end'
-                      onMouseDown={e => e.preventDefault()}
+                      aria-label='toggle password visibility'
                       onClick={() => setShowPassword(!showPassword)}
+                      onMouseDown={(e) => e.preventDefault()}
+                      edge='end'
                     >
                       <Icon icon={showPassword ? 'mdi:eye-outline' : 'mdi:eye-off-outline'} />
                     </IconButton>
                   </InputAdornment>
                 }
+                label='Password'
               />
             </FormControl>
+
 
             <FormControlLabel
               sx={{ '& .MuiFormControlLabel-label': { fontSize: '0.875rem', color: 'text.secondary' } }}
