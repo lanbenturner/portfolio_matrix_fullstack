@@ -6,7 +6,6 @@ import Link from 'next/link'
 
 // ** MUI Components
 import Button from '@mui/material/Button'
-import Divider from '@mui/material/Divider'
 import Checkbox from '@mui/material/Checkbox'
 import TextField from '@mui/material/TextField'
 import InputLabel from '@mui/material/InputLabel'
@@ -125,8 +124,10 @@ const Register = () => {
           </Typography>
           <Typography sx={{ mb: 6, color: 'text.secondary' }}>Make your app management easy and fun!</Typography>
           <form noValidate autoComplete='off' onSubmit={e => e.preventDefault()}>
-            <TextField autoFocus fullWidth sx={{ mb: 4 }} label='Username' placeholder='johndoe' />
-            <TextField fullWidth label='Email' sx={{ mb: 4 }} placeholder='user@email.com' />
+            <TextField autoFocus fullWidth sx={{ mb: 4 }} label='First Name' />
+            <TextField fullWidth label='Last Name' sx={{ mb: 4 }} />
+            <TextField fullWidth label='Preferred Name' sx={{ mb: 4 }} />
+            <TextField fullWidth label='Email' sx={{ mb: 4 }} />
             <FormControl fullWidth>
               <InputLabel htmlFor='auth-login-v2-password'>Password</InputLabel>
               <OutlinedInput
@@ -171,26 +172,6 @@ const Register = () => {
               <Typography variant='body2'>
                 <LinkStyled href='/login'>Sign in instead</LinkStyled>
               </Typography>
-            </Box>
-            <Divider sx={{ my: `${theme.spacing(6)} !important` }}>or</Divider>
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <IconButton href='/' component={Link} sx={{ color: '#497ce2' }} onClick={e => e.preventDefault()}>
-                <Icon icon='bxl:facebook-circle' />
-              </IconButton>
-              <IconButton href='/' component={Link} sx={{ color: '#1da1f2' }} onClick={e => e.preventDefault()}>
-                <Icon icon='bxl:twitter' />
-              </IconButton>
-              <IconButton
-                href='/'
-                component={Link}
-                onClick={e => e.preventDefault()}
-                sx={{ color: theme.palette.mode === 'light' ? '#272727' : 'grey.300' }}
-              >
-                <Icon icon='bxl:github' />
-              </IconButton>
-              <IconButton href='/' component={Link} sx={{ color: '#db4437' }} onClick={e => e.preventDefault()}>
-                <Icon icon='bxl:google' />
-              </IconButton>
             </Box>
           </form>
         </Box>
