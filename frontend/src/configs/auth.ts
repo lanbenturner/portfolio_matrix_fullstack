@@ -1,5 +1,5 @@
 export default {
-  meEndpoint: '/users/me/', // Assuming you have a view that handles '/users/me/' for fetching user details
+  meEndpoint: '/me/', // Matches 'CurrentUserAPIView.as_view()' in Django 'users' app urls.py
   loginEndpoint: '/token/', // Matches 'TokenObtainPairView.as_view()'
   registerEndpoint: '/register/', // Matches 'RegisterUserAPIView.as_view()'
   refreshTokenEndpoint: '/token/refresh/', // Matches 'TokenRefreshView.as_view()'
