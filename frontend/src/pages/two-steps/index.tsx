@@ -88,7 +88,7 @@ const defaultValues: { [key: string]: string } = {
   val5: '',
   val6: ''
 }
-const TwoStepsV2 = () => {
+const TwoSteps = () => {
   // ** State
   const [isBackspace, setIsBackspace] = useState<boolean>(false)
 
@@ -251,6 +251,6 @@ const TwoStepsV2 = () => {
   )
 }
 
-TwoStepsV2.getLayout = (page: ReactNode) => <BlankLayout>{page}</BlankLayout>
+TwoSteps.getLayout = (page: ReactNode) => <BlankLayout>{page}</BlankLayout>
 
-export default TwoStepsV2
+export default TwoSteps

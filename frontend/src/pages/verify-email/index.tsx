@@ -50,7 +50,7 @@ const LinkStyled = styled(Link)(({ theme }) => ({
   color: theme.palette.primary.main
 }))
 
-const VerifyEmailV2 = () => {
+const VerifyEmail = () => {
   // ** Hooks
   const theme = useTheme()
   const { settings } = useSettings()
@@ -129,6 +129,6 @@ const VerifyEmailV2 = () => {
   )
 }
 
-VerifyEmailV2.getLayout = (page: ReactNode) => <BlankLayout>{page}</BlankLayout>
+VerifyEmail.getLayout = (page: ReactNode) => <BlankLayout>{page}</BlankLayout>
 
-export default VerifyEmailV2
+export default VerifyEmail

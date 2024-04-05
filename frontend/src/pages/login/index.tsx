@@ -67,7 +67,7 @@ const LinkStyled = styled(Link)(({ theme }) => ({
   color: theme.palette.primary.main
 }))
 
-const LoginV2 = () => {
+const Login = () => {
   // ** States
   const [values, setValues] = useState<State>({
     password: '',
@@ -213,6 +213,6 @@ const LoginV2 = () => {
   )
 }
 
-LoginV2.getLayout = (page: ReactNode) => <BlankLayout>{page}</BlankLayout>
+Login.getLayout = (page: ReactNode) => <BlankLayout>{page}</BlankLayout>
 
-export default LoginV2
+export default Login

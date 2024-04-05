@@ -67,7 +67,7 @@ const LinkStyled = styled(Link)(({ theme }) => ({
   color: theme.palette.primary.main
 }))
 
-const RegisterV2 = () => {
+const Register = () => {
   // ** States
   const [values, setValues] = useState<State>({
     password: '',
@@ -218,6 +218,6 @@ const RegisterV2 = () => {
   )
 }
 
-RegisterV2.getLayout = (page: ReactNode) => <BlankLayout>{page}</BlankLayout>
+Register.getLayout = (page: ReactNode) => <BlankLayout>{page}</BlankLayout>
 
-export default RegisterV2
+export default Register

@@ -68,7 +68,7 @@ const LinkStyled = styled(Link)(({ theme }) => ({
   color: theme.palette.primary.main
 }))
 
-const ResetPasswordV2 = () => {
+const ResetPassword = () => {
   // ** States
   const [values, setValues] = useState<State>({
     newPassword: '',
@@ -215,6 +215,6 @@ const ResetPasswordV2 = () => {
   )
 }
 
-ResetPasswordV2.getLayout = (page: ReactNode) => <BlankLayout>{page}</BlankLayout>
+ResetPassword.getLayout = (page: ReactNode) => <BlankLayout>{page}</BlankLayout>
 
-export default ResetPasswordV2
+export default ResetPassword
