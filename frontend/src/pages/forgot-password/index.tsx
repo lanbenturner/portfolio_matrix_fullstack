@@ -56,7 +56,7 @@ const LinkStyled = styled(Link)(({ theme }) => ({
   color: theme.palette.primary.main
 }))
 
-const ForgotPasswordV2 = () => {
+const ForgotPassword = () => {
   // ** Hooks
   const theme = useTheme()
   const { settings } = useSettings()
@@ -135,6 +135,6 @@ const ForgotPasswordV2 = () => {
   )
 }
 
-ForgotPasswordV2.getLayout = (page: ReactNode) => <BlankLayout>{page}</BlankLayout>
+ForgotPassword.getLayout = (page: ReactNode) => <BlankLayout>{page}</BlankLayout>
 
-export default ForgotPasswordV2
+export default ForgotPassword
