@@ -1,46 +1,43 @@
-import { AbilityBuilder, Ability } from '@casl/ability'
+import { Ability, AbilityBuilder, AbilityClass, ExtractSubjectType, InferSubjects } from '@casl/ability';
 
-export type Subjects = string
-export type Actions = 'manage' | 'create' | 'read' | 'update' | 'delete'
+// Define the actions for CASL
+export type Actions = 'manage' | 'create' | 'read' | 'update' | 'delete';
 
-export type AppAbility = Ability<[Actions, Subjects]> | undefined
+// Define subjects based on your application's models/entities, 'all' is a special keyword in CASL
+export type Subjects = InferSubjects<typeof Ability> | 'all';
 
-export const AppAbility = Ability as any
+// Define the Ability type for CASL
+export type AppAbility = Ability<[Actions, Subjects]>;
+const AppAbility = Ability as AbilityClass<AppAbility>;
+
+// Define a generic object for ACL
 export type ACLObj = {
-  action: Actions
-  subject: string
-}
+  action: Actions;
+  subject: Subjects;
+};
 
-/**
- * Please define your own Ability rules according to your app requirements.
- * We have just shown Admin and Client rules for demo purpose where
- * admin can manage everything and client can just visit ACL page
- */
-const defineRulesFor = (role: string, subject: string) => {
-  const { can, rules } = new AbilityBuilder(AppAbility)
+// Function to define rules for the ability
+const defineRulesFor = () => {
+  const { can, build } = new AbilityBuilder(AppAbility);
 
-  if (role === 'admin') {
-    can('manage', 'all')
-  } else if (role === 'client') {
-    can(['read'], 'acl-page')
-  } else {
-    can(['read', 'create', 'update', 'delete'], subject)
-  }
+  // Allow logged-in users to 'manage' everything, using 'all' as a subject
+  can('manage', 'all');
 
-  return rules
-}
+  return build({
+    // Function to detect the subject type, needed by CASL to check permissions
+    detectSubjectType: (item) => typeof item === 'object' && item ? (item.constructor as ExtractSubjectType<Subjects>) : item,
+  });
+};
 
-export const buildAbilityFor = (role: string, subject: string): AppAbility => {
-  return new AppAbility(defineRulesFor(role, subject), {
-    // https://casl.js.org/v5/en/guide/subject-type-detection
-    // @ts-ignore
-    detectSubjectType: object => object!.type
-  })
-}
+// Function to build the ability for the user
+export const buildAbilityFor = (): AppAbility => {
+  return defineRulesFor();
+};
 
+// Default ACL object that specifies that any action can be performed on any subject
 export const defaultACLObj: ACLObj = {
   action: 'manage',
-  subject: 'all'
-}
+  subject: 'all',
+};
 
-export default defineRulesFor
+export default defineRulesFor;
