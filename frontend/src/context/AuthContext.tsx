@@ -38,60 +38,65 @@ const AuthProvider = ({ children }: Props) => {
   const router = useRouter()
 
   useEffect(() => {
-    const initAuth = async (): Promise<void> => {
-      const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)!
+    const initAuth = async () => {
+      const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName);
       if (storedToken) {
-        setLoading(true)
-        await axios
-          .get(authConfig.meEndpoint, {
+        setLoading(true);
+        try {
+          const response = await axios.get(authConfig.meEndpoint, {
             headers: {
-              Authorization: storedToken
+              Authorization: `Bearer ${storedToken}`
             }
-          })
-          .then(async response => {
-            setLoading(false)
-            setUser({ ...response.data.userData })
-          })
-          .catch(() => {
-            localStorage.removeItem('userData')
-            localStorage.removeItem('refreshToken')
-            localStorage.removeItem('accessToken')
-            setUser(null)
-            setLoading(false)
-            if (authConfig.onTokenExpiration === 'logout' && !router.pathname.includes('login')) {
-              router.replace('/login')
-            }
-          })
+          });
+          setUser(response.data); // Set the user state with the fetched user details
+          setLoading(false);
+        } catch (error) {
+          console.error("Authentication initialization error:", error);
+          setLoading(false);
+          setUser(null);
+          localStorage.removeItem('userData');
+          localStorage.removeItem('refreshToken');
+          localStorage.removeItem(authConfig.storageTokenKeyName);
+          router.replace('/login');
+        }
       } else {
-        setLoading(false)
+        setLoading(false);
       }
-    }
+    };
 
-    initAuth()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    initAuth();
+  }, [router]);
+
 
   const handleLogin = (params: LoginParams, errorCallback?: ErrCallbackType) => {
-    axios
-      .post(authConfig.loginEndpoint, params)
-      .then(async response => {
-        params.rememberMe
-          ? window.localStorage.setItem(authConfig.storageTokenKeyName, response.data.accessToken)
-          : null
-        const returnUrl = router.query.returnUrl
+    axios.post(authConfig.loginEndpoint, {
+      email: params.email,
+      password: params.password
+    })
+    .then(response => {
+      const { access, refresh } = response.data; // Assuming your backend responds with 'access' and 'refresh' tokens
+      window.localStorage.setItem(authConfig.storageTokenKeyName, access);
+      window.localStorage.setItem('refreshToken', refresh); // Store refresh token if you plan to implement token refresh
 
-        setUser({ ...response.data.userData })
-        params.rememberMe ? window.localStorage.setItem('userData', JSON.stringify(response.data.userData)) : null
+      // Optionally, immediately fetch user details after successful login
+      axios.get(authConfig.meEndpoint, {
+        headers: {
+          Authorization: `Bearer ${access}`
+        }
+      }).then(res => {
+        setUser(res.data); // Assuming 'res.data' contains the user details
+        router.replace('/dashboard'); // Redirect user to dashboard or desired route
+      }).catch(error => {
+        console.error("Error fetching user details:", error);
+        if (errorCallback) errorCallback(error);
+      });
+    })
+    .catch(err => {
+      console.error("Login error:", err);
+      if (errorCallback) errorCallback(err);
+    });
+  };
 
-        const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
-
-        router.replace(redirectURL as string)
-      })
-
-      .catch(err => {
-        if (errorCallback) errorCallback(err)
-      })
-  }
 
   const handleLogout = () => {
     setUser(null)
