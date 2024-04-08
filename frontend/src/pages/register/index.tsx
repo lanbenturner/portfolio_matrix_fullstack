@@ -61,9 +61,9 @@ const Register = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false)
 
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    preferredName: '',
+    first_name: '',
+    last_name: '',
+    preferred_name: '',
     email: '',
     password: '',
   });
@@ -82,12 +82,27 @@ const Register = () => {
     const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
     try {
-      const response = await axios.post(`${apiBaseUrl}${authConfig.registerEndpoint}`, formData);
-      console.log('Registration successful', response.data);
+      // Register the user
+      const registerResponse = await axios.post(`${apiBaseUrl}${authConfig.registerEndpoint}`, formData);
+      console.log('Registration successful', registerResponse.data);
+
+      // After successful registration, log the user in
+      const loginResponse = await axios.post(`${apiBaseUrl}${authConfig.loginEndpoint}`, {
+        email: formData.email,
+        password: formData.password
+      });
+
+      // Assuming your login response includes an access token
+      // Save the token in localStorage
+      window.localStorage.setItem(authConfig.storageTokenKeyName, loginResponse.data.accessToken);
+
+      // Redirect the user to the root
+      window.location.href = '/'; // Using window.location.href for a full page reload
     } catch (error: any) {
-      console.error('Registration error', error.response?.data);
+      console.error('Registration or login error', error.response?.data);
     }
   };
+
 
   // ** Hooks
   const theme = useTheme()
@@ -151,24 +166,24 @@ const Register = () => {
             <TextField
               autoFocus
               fullWidth
-              name="firstName"
-              value={formData.firstName}
+              name="first_name"
+              value={formData.first_name}
               onChange={handleChange}
               label='First Name'
               sx={{ mb: 4 }}
             />
             <TextField
               fullWidth
-              name="lastName"
-              value={formData.lastName}
+              name="last_name"
+              value={formData.last_name}
               onChange={handleChange}
               label='Last Name'
               sx={{ mb: 4 }}
             />
             <TextField
               fullWidth
-              name="preferredName"
-              value={formData.preferredName}
+              name="preferred_name"
+              value={formData.preferred_name}
               onChange={handleChange}
               label='Preferred Name'
               sx={{ mb: 4 }}
