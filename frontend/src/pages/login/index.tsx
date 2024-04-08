@@ -1,6 +1,9 @@
 // ** React Imports
 import { useState, ReactNode, } from 'react'
 
+import axios from 'axios';
+import authConfig from 'src/configs/auth';
+
 // ** Next Imports
 import Link from 'next/link'
 
@@ -29,7 +32,6 @@ import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 
 // ** Hooks
-import { useAuth } from 'src/hooks/useAuth'
 import { useSettings } from 'src/@core/hooks/useSettings'
 
 // ** Configs
@@ -74,8 +76,8 @@ const schema = yup.object().shape({
 })
 
 const defaultValues = {
-  password: 'admin',
-  email: 'admin@sneat.com'
+  password: '',
+  email: ''
 }
 
 interface FormData {
@@ -88,7 +90,6 @@ const LoginPage = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false)
 
   // ** Hooks
-  const auth = useAuth()
   const theme = useTheme()
   const { settings } = useSettings()
   const hidden = useMediaQuery(theme.breakpoints.down('lg'))
@@ -107,15 +108,36 @@ const LoginPage = () => {
     resolver: yupResolver(schema)
   })
 
-  const onSubmit = (data: FormData) => {
-    const { email, password } = data
-    auth.login({ email, password, rememberMe }, () => {
-      setError('email', {
+  const onSubmit = async (data: FormData) => {
+    const { email, password } = data;
+    const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+
+    try {
+      // Attempt to login using the provided credentials
+      const response = await axios.post(`${apiBaseUrl}${authConfig.loginEndpoint}`, { email, password });
+      console.log('Login successful', response.data);
+
+      // If login is successful, you can handle post-login logic here
+      // For example, saving the token, updating user state, and redirecting the user
+
+    } catch (error: any) {
+      console.error('Login error', error.response?.data);
+
+      // Set manual error on the form if login fails
+      // You can set this on the email, password, or a general form error field, depending on your form design
+      setError('password', {
         type: 'manual',
-        message: 'Email or Password is invalid'
-      })
-    })
-  }
+        message: 'Login failed. Please try again.' // Customize this message based on the actual error if needed
+      });
+
+      // If your form has a general error field for displaying non-field-specific errors, you can set it like this:
+      // setError('general', {
+      //   type: 'manual',
+      //   message: 'Login failed. Please try again.'
+      // });
+    }
+  };
+
 
   return (
     <Box className='content-right'>
@@ -183,7 +205,7 @@ const LoginPage = () => {
                     onBlur={onBlur}
                     onChange={onChange}
                     error={Boolean(errors.email)}
-                    placeholder='admin@sneat.com'
+                    placeholder=''
                   />
                 )}
               />
