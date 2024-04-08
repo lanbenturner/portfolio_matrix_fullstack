@@ -79,8 +79,10 @@ const Register = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+
     try {
-      const response = await axios.post(authConfig.registerEndpoint, formData);
+      const response = await axios.post(`${apiBaseUrl}${authConfig.registerEndpoint}`, formData);
       console.log('Registration successful', response.data);
     } catch (error: any) {
       console.error('Registration error', error.response?.data);
