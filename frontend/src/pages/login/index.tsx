@@ -1,5 +1,7 @@
 // ** React Imports
 import { useState, ReactNode, } from 'react'
+import { useRouter } from 'next/router';
+
 
 import axios from 'axios';
 import authConfig from 'src/configs/auth';
@@ -88,6 +90,8 @@ interface FormData {
 const LoginPage = () => {
   const [rememberMe, setRememberMe] = useState<boolean>(true)
   const [showPassword, setShowPassword] = useState<boolean>(false)
+  const router = useRouter();
+
 
   // ** Hooks
   const theme = useTheme()
@@ -117,8 +121,8 @@ const LoginPage = () => {
       const response = await axios.post(`${apiBaseUrl}${authConfig.loginEndpoint}`, { email, password });
       console.log('Login successful', response.data);
 
-      // If login is successful, you can handle post-login logic here
-      // For example, saving the token, updating user state, and redirecting the user
+      // Redirect user to home page after successful login
+      router.push('/'); // This line redirects the user to the home page
 
     } catch (error: any) {
       console.error('Login error', error.response?.data);
