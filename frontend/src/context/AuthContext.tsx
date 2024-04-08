@@ -85,7 +85,7 @@ const AuthProvider = ({ children }: Props) => {
         }
       }).then(res => {
         setUser(res.data); // Assuming 'res.data' contains the user details
-        router.replace('/dashboard'); // Redirect user to dashboard or desired route
+        router.replace('/'); // Redirect user to dashboard or desired route
       }).catch(error => {
         console.error("Error fetching user details:", error);
         if (errorCallback) errorCallback(error);
