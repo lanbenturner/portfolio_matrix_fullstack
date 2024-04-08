@@ -15,8 +15,6 @@ const navigation = (): VerticalNavItemsType => {
     },
     {
       path: '/acl',
-      action: 'read',
-      subject: 'acl-page',
       title: 'Access Control',
       icon: 'bx:shield',
     }
