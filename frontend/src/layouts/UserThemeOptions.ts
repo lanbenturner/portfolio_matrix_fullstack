@@ -10,24 +10,37 @@ import corePalette from 'src/@core/theme/palette'
 // ** To use mode (light/dark/semi-dark), skin(default/bordered), direction(ltr/rtl), etc. for conditional styles, uncomment below line
 import { useSettings } from 'src/@core/hooks/useSettings'
 
-const UserThemeOptions = (): ThemeOptions => {
-  // ** To use mode (light/dark/semi-dark), skin(default/bordered), direction(ltr/rtl), etc. for conditional styles, uncomment below line
-const { settings } = useSettings()
+  const UserThemeOptions = (): ThemeOptions => {
+    // ** To use mode (light/dark/semi-dark), skin(default/bordered), direction(ltr/rtl), etc. for conditional styles, uncomment below line
+  const { settings } = useSettings()
 
-  // ** To use mode (light/dark/semi-dark), skin(default/bordered), direction(ltr/rtl), etc. for conditional styles, uncomment below line
-const { mode } = settings
+    // ** To use mode (light/dark/semi-dark), skin(default/bordered), direction(ltr/rtl), etc. for conditional styles, uncomment below line
+  const { mode } = settings
 
-  // ** To use core palette, uncomment the below line
-const palette = corePalette(mode as PaletteMode, settings)
+    // ** To use core palette, uncomment the below line
+  const palette = corePalette(mode as PaletteMode, settings)
+
+  // Redefine background colors specifically for dark mode
+  if (mode === 'dark') {
+    palette.background.default = '#212630';  // Changes default background color
+    palette.background.paper = '#282E3A';    // Changes paper background color
+  }
 
   return {
     palette:{
+      ...palette,  // Spread the existing palette to inherit other unchanged settings
       primary: {
+        light: '#29CCEF',
+        main: '#03C3EC',
+        dark: '#03B1D7',
+        contrastText: '#FFF'
+      },
+      info: {
         light: '#8082FF',
         main: '#696CFF',
         dark: '#6062E8',
         contrastText: '#FFF'
-      }
+      },
     },
     breakpoints: {
       values: {
